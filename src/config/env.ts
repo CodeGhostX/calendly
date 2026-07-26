@@ -1,4 +1,4 @@
-import "dotenv/config";
+import 'dotenv/config';
 
 export const env = {
   PORT: process.env.PORT || 3001,
@@ -8,5 +8,6 @@ export const env = {
   DB_USER: process.env.DATABASE_USER,
   DB_PASSWORD: process.env.DATABASE_PASSWORD,
   DB_NAME: process.env.DATABASE_NAME,
-  DB_PORT: process.env.DATABASE_PORT
-}
+  DB_PORT: process.env.DATABASE_PORT,
+  NODE_ENV: process.env.NODE_ENV
+};

@@ -1,6 +1,6 @@
-import { env } from "../config/env.js"
-import { PrismaMariaDb } from "@prisma/adapter-mariadb";
-import { PrismaClient } from "../../generated/prisma/client.js"
+import { env } from '../config/env.js';
+import { PrismaMariaDb } from '@prisma/adapter-mariadb';
+import { PrismaClient } from '../../generated/prisma/client.js';
 
 const adapter = new PrismaMariaDb({
   host: env.DB_HOST || '127.0.0.1',
@@ -16,9 +16,9 @@ export const prisma = new PrismaClient({ adapter });
 export async function connectToDatabase() {
   try {
     await prisma.$connect();
-    console.log(`Connected to DB successfully ✅`)
+    console.log(`Connected to DB successfully ✅`);
   } catch (error) {
-    console.log(`Database connection failed ❌`)
+    console.log(`Database connection failed ❌`);
     process.exit(1);
   }
 }

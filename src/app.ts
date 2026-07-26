@@ -1,18 +1,21 @@
-import express, { type Express } from "express";
-import { prisma } from "./config/database.js";
+import express, { type Express } from 'express';
+import { userRouter } from './routers/user.router.js';
+import { errorHandler } from './middlewares/error-handler.js';
+import { routeNotFound } from './middlewares/route-not-found.js';
 
 const app: Express = express();
 
-app.get("/health", (_req, res) => {
+app.use(express.json());
+
+app.get('/health', (_req, res) => {
   res.json({
-    status: "ok",
+    status: 'ok',
     timestamp: new Date().toISOString(),
   });
 });
 
-app.get("/get-users", async (_req, res) => {
-  const allUsers = await prisma.user.findMany();
-  res.json(allUsers);
-});
+app.use('/api/users', userRouter);
 
+app.use(routeNotFound);
+app.use(errorHandler);
 export { app };
