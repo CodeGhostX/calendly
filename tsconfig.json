@@ -14,7 +14,7 @@
     "strict": true,
     "noImplicitAny": true,
     "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
+    "exactOptionalPropertyTypes": false,
 
     /* JavaScript Interop */
     "esModuleInterop": true,
@@ -39,6 +39,6 @@
     "removeComments": false,
     "ignoreDeprecations": "6.0"
   },
-  "include": ["src/**/*", "lib", "lib"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
 }

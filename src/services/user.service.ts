@@ -1,30 +1,31 @@
-import { add, getAll, getById, remove, update } from '../repositories/user.repository.js';
-import { notFound } from '../utils/api-error.js';
+import { conflict, notFound } from '../utils/api-error.js';
+import UserRepository from '../repositories/user.repository.js';
+import type { createUserDto, updateUserDto } from '../dtos/user.dto.js';
+import { createUniqueSlug } from '../utils/helper.js';
 
-export async function findAllUsers() {
-  const users = await getAll();
-  return users;
-}
-
-export async function findUserById(id: number) {
-  const user = await getById(id);
-  if (!user) {
-    throw notFound('User Not Found');
+export default class UserService {
+  static async findUserById(id: number) {
+    const user = await UserRepository.getById(id);
+    if (!user) {
+      throw notFound('User Not Found');
+    }
+    return user;
   }
-  return user;
-}
 
-export async function createUser(data: any) {
-  const user = await add(data);
-  return user;
-}
+  static async createUser(data: createUserDto) {
+    const existingUser = await UserRepository.findByEmail(data.email);
+    if (existingUser) {
+      throw conflict('User already exists');
+    }
+    const slugPassed = data.slug ? data.slug : createUniqueSlug(data.name);
+    return UserRepository.create({ ...data, slug: slugPassed });
+  }
 
-export async function updateUser(id: number, data: any) {
-  const user = await update(id, data);
-  return user;
-}
-
-export async function deleteUser(id: number) {
-  const user = await remove(id);
-  return user;
+  static async updateUser(id: number, data: updateUserDto) {
+    const existingUser = await UserRepository.getById(id);
+    if (!existingUser) {
+      throw conflict('User already exists');
+    }
+    return UserRepository.update(id, data);
+  }
 }

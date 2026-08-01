@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --watch src --ext ts --exec 'tsx src/server.ts'",
-    "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "prisma:format": "pnpm dlx prisma format",
+    "prisma:migrate": "pnpm dlx prisma migrate dev",
+    "prisma:generate": "pnpm dlx prisma generate",
+    "prisma:all": "pnpm prisma format && pnpm prisma migrate dev && pnpm prisma generate"
   },
   "keywords": [],
   "author": "",
